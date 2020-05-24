@@ -15,6 +15,7 @@ import ProfileScene from './src/screens/ProfileScene'
 import SearchScene from './src/screens/SearchScene'
 import LikeScene from './src/screens/LikeScene';
 import MessageScene from './src/screens/home/MessagesScene';
+import GlobalState from './src/context/GlobalState'
 
 const Tab = createBottomTabNavigator()
 
@@ -57,14 +58,16 @@ const LikeStackScreen = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name='Home' component={HomeStackScreen} options={{title: 'My Home'}} />
-        <Tab.Screen name="Search" component={SearchStackScreen} />
-        <Tab.Screen name="Like" component={LikeStackScreen} />
-        <Tab.Screen name="Profile" component={ProfileStackScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <GlobalState>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name='Home' component={HomeStackScreen} options={{title: 'My Home'}} />
+          <Tab.Screen name="Search" component={SearchStackScreen} />
+          <Tab.Screen name="Like" component={LikeStackScreen} />
+          <Tab.Screen name="Profile" component={ProfileStackScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </GlobalState>
   );
 };
 

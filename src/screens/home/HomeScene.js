@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Button, SafeAreaView , FlatList } from 'react-native'
 import Card from '../Card'
-
+import PostContext from '../../context/PostContext'
 
 const image = require('../../assets/lpbb.png')
 
@@ -45,24 +45,21 @@ const styles = StyleSheet.create({
 
 const HomeScene = ({ navigation }) => {
 
-  const data = [
-    {id: '123', avatar: image, image, comments: 'hello'},
-    {id: '124', avatar: image, image, comments: 'hello'},
-    {id: '125', avatar: image, image, comments: 'hello'},
-    {id: '126', avatar: image, image, comments: 'hello'},
-  ]
+  const context = useContext(PostContext)
+
+  const { posts } = context
 
   return(
     <SafeAreaView style={{flex: 1}}>
-      <Button
+      {/* <Button
         title='go to messages'
         onPress={() => navigation.push('Messages', {
             name: 'Bruno'
           })}
-        />
+      /> */}
       <View style={styles.container}>
         <FlatList
-          data={data}
+          data={posts}
           renderItem={({ item }) => <Card post={item} />}
           keyExtractor={item => item.id}
       />

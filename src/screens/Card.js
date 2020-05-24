@@ -1,6 +1,7 @@
-import React from 'react'
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
-import { Image, Avatar, Icon } from 'react-native-elements'
+import React, { useContext, useEffect, useState } from 'react'
+import { StyleSheet, View, Text, ActivityIndicator, FlatList, TextInput } from 'react-native'
+import { Image, Avatar, Icon, Input } from 'react-native-elements'
+import PostContext from '../context/PostContext'
 
 const styles = StyleSheet.create({
   container: {
@@ -40,6 +41,16 @@ const styles = StyleSheet.create({
 });
 
 const Card = ({post}) => {
+
+  const context = useContext(PostContext)
+  const [commentInput, showCommentInput] = useState(false)
+
+  useEffect(() => {
+    console.log(context)
+  },[context])
+
+  const { avatar, image, id, counter, comments } = post
+
   return(
     <View style={styles.card}>
 
@@ -47,7 +58,7 @@ const Card = ({post}) => {
         <View style={styles.headerAvatar}>
           <Avatar
             rounded
-            source={post.avatar}
+            source={avatar}
             size='small'
               />
         </View>
@@ -59,21 +70,61 @@ const Card = ({post}) => {
           
       <View style={styles.image}>
         <Image
-          source={post.image}
+          source={image}
           style={{ width: 400, height: 400 }}
           PlaceholderContent={<ActivityIndicator />}
           />
       </View>
       <View style={styles.interaction}>
         <View style={styles.interactionLeft}>
-          <Icon color='black' name="heart-o" type="font-awesome" size={20} />
-          <Icon style={{paddingLeft: 10}} color='black' name="comment-o" type="font-awesome" size={20} />
+          <Icon
+            color='black'
+            name='heart-o'
+            type='font-awesome'
+            size={20}
+            onPress={() => context.addLike(id)}
+          />
+          <Icon
+            style={{paddingLeft: 10}}
+            color='black'
+            name='comment-o'
+            type='font-awesome'
+            size={20}
+            onPress={() => showCommentInput(!commentInput)}
+          />
         </View>
         <View style={styles.interactionRight}>
-          <Icon color='black' name="bookmark-o" type="font-awesome" size={20} />
+          <Icon
+            color='black'
+            name="bookmark-o"
+            type="font-awesome"
+            size={20}
+            onPress={() => context.savePost(id)}
+          />
         </View>
       </View>
-      <Text>{post.comments}</Text>
+      <Text>{`${counter  } likes`}</Text>
+      {
+        commentInput ? (
+          <Input
+            onSubmitEditing={event => {showCommentInput(false); context.addComment(event.nativeEvent.text, '@bruno', id)}} 
+            placeholder='comment' />
+        ) : null
+      }
+      <FlatList
+        data={comments}
+        renderItem={({ item }) => (
+          <View style={{flexDirection: 'row', paddingLeft: 10}}>
+            <Text style={{fontWeight: 'bold'}}>
+              {`${item.author  } `}
+            </Text>
+            <Text>
+              {item.message}
+            </Text>
+          </View>
+        )}
+        keyExtractor={item => item.id}
+      />
     </View>
   )
 }
