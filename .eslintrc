@@ -1,0 +1,70 @@
+{
+  "env": {
+    "browser": false,
+    "es6": true,
+    "node": true,
+    "react-native/react-native": true,
+    "jest": true
+  },
+  "extends": ["airbnb", "prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["import", "react", "react-native", "react-hooks"],
+  "rules": {
+    "arrow-parens": ["error", "as-needed"],
+    "func-names": ["error", "never"],
+    "import/no-unresolved": [
+      "error",
+      {
+        "ignore": ["^react(-native)?$"]
+      }
+    ],
+    "no-console": 0,
+    "no-return-assign": ["error", "except-parens"],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "no-plusplus": 0,
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "no-void": 0,
+    "no-warning-comments": "warn",
+    "radix": ["error", "as-needed"],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js"]
+      }
+    ],
+    "react/jsx-closing-bracket-location": "off",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "spaced-comment": 0,
+    "padded-blocks": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".android.js", ".ios.js"]
+      }
+    }
+  }
+}
